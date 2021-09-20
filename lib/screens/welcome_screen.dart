@@ -1,6 +1,6 @@
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -28,6 +28,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
       // upperBound: 100.0
     );
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    // animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
+    //             .animate(controller);
     controller.forward();
     // controller.reverse(from: 1.0);
     // know animation station completed or dismissed
@@ -68,10 +70,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                     height: animation.value * 100.0,
                   ),
                 ),
-                Text(
+                TypewriterAnimatedTextKit(
                   // '${controller.value.toInt()}%',
-                  'Flash Chat',
-                  style: TextStyle(
+                  text: ['Flash Chat'],
+                  textStyle: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                     color: Colors.black45,
