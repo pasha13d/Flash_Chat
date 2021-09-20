@@ -10,7 +10,44 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+// Add with SingleTickerProviderStateMixin to provide TICKER for animation.
+class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin {
+  // Custom animation controller
+  AnimationController controller;
+  Animation animation;
+
+  @override
+  void initState() {
+    // TODO: implement initState for Custom animation controller
+    super.initState();
+    controller = AnimationController(
+      // Animation duration
+      duration: Duration(seconds: 1),
+      // _WelcomeScreenState will provide this.
+      vsync: this,
+      // upperBound: 100.0
+    );
+    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    controller.forward();
+    // controller.reverse(from: 1.0);
+    // know animation station completed or dismissed
+    animation.addStatusListener((status) {
+      print(status);
+    });
+    controller.addListener(() {
+      setState(() {
+
+      });
+      print(animation.value);
+    });
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +64,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 60.0,
+                    // height: 60.0,
+                    height: animation.value * 100.0,
                   ),
                 ),
                 Text(
+                  // '${controller.value.toInt()}%',
                   'Flash Chat',
                   style: TextStyle(
                     fontSize: 45.0,
